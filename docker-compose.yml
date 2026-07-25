@@ -1,0 +1,42 @@
+services:
+  showmyrides-v2:
+    container_name: showmyrides-v2
+    build: ./docker/backend
+    volumes:
+      - ./backend:/var/www/html/backend
+    working_dir: /var/www/html/backend
+    ports:
+      - "8080:80"
+    depends_on:
+      - showmyrides-v2-php
+
+  showmyrides-v2-php:
+    container_name: showmyrides-v2-php
+    build: ./docker/php
+    volumes:
+      - ./:/var/www/html/
+    working_dir: /var/www/html/backend
+    links:
+      - showmyrides-v2-mariadb
+
+  showmyrides-v2-php-deploy:
+    container_name: showmyrides-v2-php-deploy
+    build: ./docker/php-deploy
+    volumes:
+      - ./:/var/www/html/
+    working_dir: /var/www/html/backend
+    links:
+      - showmyrides-v2-mariadb
+
+
+  showmyrides-v2-mariadb:
+    image: mariadb:12.3.2
+    container_name: showmyrides-v2-mariadb
+    ports:
+      - "33061:3306"
+    volumes:
+      - ./db-data:/var/lib/mysql
+      - ./dumps:/var/lib/mysql/dumps
+    working_dir: /var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root

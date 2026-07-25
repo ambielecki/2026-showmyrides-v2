@@ -1,0 +1,10 @@
+/junk
+/.idea
+/certs
+/db-data
+/dumps
+id_rsa
+id_rsa.pub
+known_hosts
+/backend/deploy.php
+/frontend/deploy.php
