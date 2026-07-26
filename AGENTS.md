@@ -26,5 +26,10 @@ This project is a web application running with a Vue 3 frontend, PHP 8.5 backend
 - Update the README.md after major functionality changes
 - If we are planning from a document in the planning directory, create an implementation.md with the implementation plan when starting work
 
+## Additional Resources
+- The current site lives at https://showmyrides.com and can be used as a resource
+- The code for the original repository lives at ../2026-bike
+- The code that inspired Zwift maps integration lives at ../zwiftmap
+
 ## Additional Instructions
 - The backend and frontend directories contain AGENTS.md files with instructions for the relevant portions of the code

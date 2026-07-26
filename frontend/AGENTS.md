@@ -15,3 +15,7 @@ This is a Vue.js with pinia and vue-router frontend. This repo is using playwrig
 - Single-card pages, such as log in and follow-on authenticated views, should sit below the navbar with standard page padding. Do not vertically center a lone card in the viewport.
 - Use the Playwright Skill as needed for frontend testing and implementation
 - Always stop the vite dev server when finished
+
+## Resources
+- The current live site exists at https://showmyrides.com and can be used as a reference
+
