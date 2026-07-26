@@ -60,3 +60,48 @@ test('shows the carousel placeholder when backend images fail', async ({ page })
 
   await expect(page.getByText('Ride map preview unavailable')).toBeVisible()
 })
+
+test('publishes browser and mobile favicon assets', async ({ page }) => {
+  await page.goto('/')
+
+  await expect(page.locator('link[rel="icon"][type="image/svg+xml"]')).toHaveAttribute(
+    'href',
+    '/favicon.svg',
+  )
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute(
+    'href',
+    '/apple-touch-icon.png',
+  )
+  await expect(page.locator('link[rel="manifest"]')).toHaveAttribute(
+    'href',
+    '/site.webmanifest',
+  )
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute(
+    'content',
+    '#355e3b',
+  )
+
+  for (const assetPath of [
+    '/favicon.svg',
+    '/favicon.ico',
+    '/favicon-16x16.png',
+    '/favicon-32x32.png',
+    '/apple-touch-icon.png',
+    '/android-chrome-192x192.png',
+    '/android-chrome-512x512.png',
+  ]) {
+    const response = await page.request.get(assetPath)
+    expect(response.ok(), `${assetPath} should be available`).toBe(true)
+  }
+
+  const manifestResponse = await page.request.get('/site.webmanifest')
+  expect(manifestResponse.ok()).toBe(true)
+  await expect(manifestResponse.json()).resolves.toMatchObject({
+    name: 'ShowMyRides',
+    theme_color: '#355e3b',
+    icons: [
+      { sizes: '192x192', type: 'image/png' },
+      { sizes: '512x512', type: 'image/png', purpose: 'any maskable' },
+    ],
+  })
+})
