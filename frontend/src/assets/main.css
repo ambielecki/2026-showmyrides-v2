@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: light --default;
+  include: button, card, carousel, drawer, footer, link, menu, navbar, rootscrolllock;
+  logs: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-base-100: #fffdf7;
+  --color-base-200: #f8f6f0;
+  --color-base-300: #dce7d4;
+  --color-base-content: #142013;
+  --color-primary: #355e3b;
+  --color-primary-content: #ffffff;
+  --color-neutral: #1f3523;
+  --color-neutral-content: #ffffff;
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-width: 20rem;
+    min-height: 100vh;
+  }
+}

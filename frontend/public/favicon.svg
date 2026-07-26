@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>ShowMyRides bike map icon</title>
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="#355e3b"/>
+  <path
+    fill="#fffdf7"
+    d="M32 7c-11.6 0-21 9.4-21 21 0 15.2 17.4 27 19.4 28.3a3 3 0 0 0 3.2 0C35.6 55 53 43.2 53 28 53 16.4 43.6 7 32 7Z"
+  />
+  <g fill="none" stroke="#355e3b" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.8">
+    <circle cx="23" cy="31" r="6"/>
+    <circle cx="42" cy="31" r="6"/>
+    <path d="m23 31 6-10 6 10H23Zm6-10h8l5 10m-7 0 4-12h5m-18 0h6"/>
+  </g>
+</svg>
