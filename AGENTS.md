@@ -24,7 +24,9 @@ This project is a web application running with a Vue 3 frontend, PHP 8.5 backend
 - commit and pr messages do not need to describe tests run locally
 - If a PR already exists for the branch to main, just push changes
 - Update the README.md after major functionality changes
+- Fix any spelling errors in planning docs
 - If we are planning from a document in the planning directory, create an implementation.md with the implementation plan when starting work
+- Run new migrations in the local docker container after implementation
 
 ## Additional Resources
 - The current site lives at https://showmyrides.com and can be used as a resource
