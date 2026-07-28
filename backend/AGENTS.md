@@ -168,3 +168,5 @@ The application will use Laravel Fortify for basic authentication with Laravel S
 - Do not use the PHP installed on the operating system, all PHP commands should be run in the showmyrides-v2-php-deploy container
     - Example for a Laravel migration `docker exec -it showmyrides-v2-php-deploy php artisan migrate`
     - The container working directory is `/var/wwww/html/backend` to match the backend directory
+- All models and related database tables should have an external_id column in addition the the standard id. This will be a 
+UUIDv4. We should never send the autoincrement id in an api response, only the external_id

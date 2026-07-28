@@ -13,7 +13,8 @@ This is a Vue.js with pinia and vue-router frontend. This repo is using playwrig
 - Prefer native JavaScript APIs over third-party libraries when possible.
 - For css prefer rem spacing to px.
 - Single-card pages, such as log in and follow-on authenticated views, should sit below the navbar with standard page padding. Do not vertically center a lone card in the viewport.
-- Use the Playwright Skill as needed for frontend testing and implementation
+- Use the Playwright or Google Chrome Skill as needed for frontend testing and implementation
+- Be mindful of bundle sizes, prefer solutions that only pull in necessary components or ui elements, not the entire package
 - Always stop the vite dev server when finished
 
 ## Resources
