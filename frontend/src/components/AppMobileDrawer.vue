@@ -4,12 +4,18 @@ import { RouterLink } from 'vue-router'
 
 import { getNavigationItems, homeNavigationItem } from '@/data/navigation'
 
-const props = defineProps<{
-  isOpen: boolean
-  isAuthenticated: boolean
-  isAdmin: boolean
-  toggleId: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    isOpen: boolean
+    isAuthenticated: boolean
+    isAdmin: boolean
+    isLoggingOut?: boolean
+    toggleId: string
+  }>(),
+  {
+    isLoggingOut: false,
+  },
+)
 
 const emit = defineEmits<{
   close: []
@@ -146,9 +152,10 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
             <button
               type="button"
               class="min-h-12 text-base font-semibold"
+              :disabled="isLoggingOut"
               @click="handleLogout"
             >
-              Log Out
+              {{ isLoggingOut ? 'Logging Out…' : 'Log Out' }}
             </button>
           </li>
         </ul>

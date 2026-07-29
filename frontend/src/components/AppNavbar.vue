@@ -4,11 +4,17 @@ import { RouterLink } from 'vue-router'
 
 import { getNavigationItems } from '@/data/navigation'
 
-const props = defineProps<{
-  isAuthenticated: boolean
-  isAdmin: boolean
-  drawerOpen: boolean
-}>()
+const props = withDefaults(
+  defineProps<{
+    isAuthenticated: boolean
+    isAdmin: boolean
+    isLoggingOut?: boolean
+    drawerOpen: boolean
+  }>(),
+  {
+    isLoggingOut: false,
+  },
+)
 
 const emit = defineEmits<{
   logout: []
@@ -48,12 +54,20 @@ defineExpose({ focusMenuButton })
               :to="{ name: item.routeName }"
               active-class="menu-active"
               class="font-semibold"
+              :class="{ 'btn btn-sm': !isAuthenticated }"
             >
               {{ item.label }}
             </RouterLink>
           </li>
           <li v-if="isAuthenticated">
-            <button type="button" class="font-semibold" @click="emit('logout')">Log Out</button>
+            <button
+              type="button"
+              class="font-semibold"
+              :disabled="isLoggingOut"
+              @click="emit('logout')"
+            >
+              {{ isLoggingOut ? 'Logging Out…' : 'Log Out' }}
+            </button>
           </li>
         </ul>
       </nav>

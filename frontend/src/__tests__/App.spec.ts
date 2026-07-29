@@ -55,7 +55,7 @@ describe('App', () => {
     wrapper.unmount()
   })
 
-  it('renders a working placeholder route', async () => {
+  it('renders the login route', async () => {
     await router.push('/login')
 
     const wrapper = mount(App, {
@@ -65,7 +65,7 @@ describe('App', () => {
     })
 
     expect(wrapper.get('h1').text()).toBe('Log In')
-    expect(wrapper.text()).toContain('Account login will be available in a future update.')
+    expect(wrapper.text()).toContain('Enter the email address for your account.')
   })
 
   it('creates notifications from the manual test route', async () => {
