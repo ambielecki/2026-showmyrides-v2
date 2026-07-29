@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { nextTick, ref } from 'vue'
 
+import AppAlerts from '@/components/AppAlerts.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import AppMobileDrawer from '@/components/AppMobileDrawer.vue'
 import AppNavbar from '@/components/AppNavbar.vue'
@@ -38,6 +39,8 @@ function handleLogout(): void {
   >
     Skip to main content
   </a>
+
+  <AppAlerts />
 
   <div class="drawer drawer-end">
     <input

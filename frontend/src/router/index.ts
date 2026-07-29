@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import ComingSoonView from '@/views/ComingSoonView.vue'
 import HomeView from '@/views/HomeView.vue'
+import NotificationTestView from '@/views/NotificationTestView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -81,6 +82,12 @@ const router = createRouter({
         description: 'Administrative tools will be available in a future update.',
       },
       meta: { title: 'Admin Tools' },
+    },
+    {
+      path: '/test/notifications',
+      name: 'notification-test',
+      component: NotificationTestView,
+      meta: { title: 'Notification Test' },
     },
   ],
   scrollBehavior: () => ({ top: 0 }),

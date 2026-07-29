@@ -2,7 +2,7 @@
 
 @plugin "daisyui" {
   themes: light --default;
-  include: button, card, carousel, drawer, footer, link, menu, navbar, rootscrolllock;
+  include: alert, button, card, carousel, drawer, footer, link, menu, navbar, rootscrolllock, toast;
   logs: false;
 }
 
