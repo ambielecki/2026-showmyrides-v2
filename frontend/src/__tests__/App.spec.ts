@@ -67,4 +67,29 @@ describe('App', () => {
     expect(wrapper.get('h1').text()).toBe('Log In')
     expect(wrapper.text()).toContain('Account login will be available in a future update.')
   })
+
+  it('creates notifications from the manual test route', async () => {
+    await router.push('/test/notifications')
+
+    const wrapper = mount(App, {
+      global: {
+        plugins: [createPinia(), router],
+      },
+    })
+
+    await wrapper.get('button.btn-success').trigger('click')
+    await wrapper.get('button.btn-warning').trigger('click')
+    await wrapper.get('button.btn-error').trigger('click')
+
+    const alerts = wrapper.findAll('[data-alert-severity]')
+
+    expect(alerts).toHaveLength(3)
+    expect(alerts.map((alert) => alert.attributes('data-alert-severity'))).toEqual([
+      'error',
+      'warning',
+      'success',
+    ])
+
+    wrapper.unmount()
+  })
 })

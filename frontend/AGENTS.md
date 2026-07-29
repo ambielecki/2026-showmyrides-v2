@@ -16,7 +16,7 @@ This is a Vue.js with pinia and vue-router frontend. This repo is using playwrig
 - Use the Playwright or Google Chrome Skill as needed for frontend testing and implementation
 - Be mindful of bundle sizes, prefer solutions that only pull in necessary components or ui elements, not the entire package
 - Always stop the vite dev server when finished
+- Use the shared Pinia alert store for success, warning, and error messaging. Do not implement separate alert or toast systems.
 
 ## Resources
 - The current live site exists at https://showmyrides.com and can be used as a reference
-
