@@ -133,4 +133,15 @@ describe('AppAlert', () => {
 
     expect(wrapper.emitted('dismiss')).toEqual([[1]])
   })
+
+  it('uses an error icon that is distinct from the dismiss icon', () => {
+    const wrapper = mountAlert('error')
+    const errorIconPath = wrapper.get('article > svg path').attributes('d')
+    const dismissIconPath = wrapper.get('button svg path').attributes('d')
+
+    expect(errorIconPath).toBe('M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z')
+    expect(errorIconPath).not.toBe(dismissIconPath)
+
+    wrapper.unmount()
+  })
 })

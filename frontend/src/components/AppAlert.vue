@@ -38,7 +38,7 @@ const presentations: Record<AlertSeverity, AlertPresentation> = {
     label: 'Error',
     role: 'alert',
     alertClass: 'alert-error',
-    iconPath: 'M6 18L18 6M6 6l12 12',
+    iconPath: 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
   },
 }
 

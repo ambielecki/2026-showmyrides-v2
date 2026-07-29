@@ -4,9 +4,13 @@ Reviewed PR #3, `03-notifications` into `main`.
 
 ## Required changes
 
-No required changes identified.
+- Resolved: the error-state icon used the same "X" shape as the dismiss button, which
+  made the two meanings difficult to distinguish. The error-state icon now uses a
+  circled exclamation while the dismiss button retains the "X".
 
 The implementation matches the planning document: alerts use a shared typed Pinia store, render through a single app-level host, support success/warning/error states with visible labels and semantic daisyUI alert colors, stack newest-first, support manual dismissal, and pause the 20-second timer during hover, keyboard focus, and hidden document state.
+
+No required changes remain.
 
 ## Notes
 
