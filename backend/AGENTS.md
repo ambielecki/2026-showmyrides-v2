@@ -164,6 +164,9 @@ The application will use Laravel Fortify for basic authentication with Laravel S
 
 ## Guidelines
 - PHP functions should have return types and typed arguments
+- Controllers should be thin and primarily handle getting data from the request and returning a response. Other logic should 
+be extracted to a service provider. 
+- Create request and response DTOs to make passing data between Controller and service layer explicit.
 - Create Pest unit and integration tests as appropriate
 - Do not use the PHP installed on the operating system, all PHP commands should be run in the showmyrides-v2-php-deploy container
     - Example for a Laravel migration `docker exec -it showmyrides-v2-php-deploy php artisan migrate`
