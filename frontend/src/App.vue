@@ -1,15 +1,22 @@
 <script setup lang="ts">
 import { nextTick, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 
 import AppAlerts from '@/components/AppAlerts.vue'
 import AppFooter from '@/components/AppFooter.vue'
 import AppMobileDrawer from '@/components/AppMobileDrawer.vue'
 import AppNavbar from '@/components/AppNavbar.vue'
+import { useAlertStore } from '@/stores/alerts'
+import { useAuthStore } from '@/stores/auth'
 
 const drawerToggleId = 'mobile-navigation-toggle'
+const router = useRouter()
+const alertStore = useAlertStore()
+const authStore = useAuthStore()
+const { isAdmin, isAuthenticated } = storeToRefs(authStore)
 const isDrawerOpen = ref(false)
-const isAuthenticated = ref(false)
-const isAdmin = ref(false)
+const isLoggingOut = ref(false)
 const navbar = ref<{ focusMenuButton: () => void } | null>(null)
 
 function openDrawer(): void {
@@ -26,10 +33,24 @@ async function closeDrawer(): Promise<void> {
   navbar.value?.focusMenuButton()
 }
 
-function handleLogout(): void {
-  isAuthenticated.value = false
-  isAdmin.value = false
+async function handleLogout(): Promise<void> {
+  if (isLoggingOut.value) {
+    return
+  }
+
+  isLoggingOut.value = true
+
+  try {
+    await authStore.logout()
+    alertStore.success('You have been logged out.')
+    await router.push({ name: 'home' })
+  } catch {
+    alertStore.error('Something Went Wrong')
+  } finally {
+    isLoggingOut.value = false
+  }
 }
+
 </script>
 
 <template>
@@ -57,6 +78,7 @@ function handleLogout(): void {
         ref="navbar"
         :is-authenticated="isAuthenticated"
         :is-admin="isAdmin"
+        :is-logging-out="isLoggingOut"
         :drawer-open="isDrawerOpen"
         @logout="handleLogout"
         @open-drawer="openDrawer"
@@ -73,6 +95,7 @@ function handleLogout(): void {
       :is-open="isDrawerOpen"
       :is-authenticated="isAuthenticated"
       :is-admin="isAdmin"
+      :is-logging-out="isLoggingOut"
       :toggle-id="drawerToggleId"
       @close="closeDrawer"
       @logout="handleLogout"
