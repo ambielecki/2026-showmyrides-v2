@@ -16,6 +16,8 @@
   locations route.
 - Add a responsive paginated list and a shared create/edit dialog with accessible form
   validation and shared alerts.
+- Keep every editable input in the create/edit dialog on the standard white form
+  surface, including the OpenStreetMap search input.
 - Add a Leaflet map picker with synchronized coordinate fields, a draggable marker, and
   OpenStreetMap attribution.
 - Add explicit Nominatim search during creation; selecting a result updates coordinates

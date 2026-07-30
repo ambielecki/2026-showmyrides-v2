@@ -50,6 +50,8 @@ INSERT INTO locations (user_id, system_key, map_provider, name, latitude, longit
   and an Edit button. Do not show system locations.
 - Use the same accessible modal to create and edit locations. Users can edit name,
   latitude, and longitude; `system_key` and `map_provider` remain server-controlled.
+- Use a white background for every editable modal input, including OpenStreetMap search,
+  name, latitude, and longitude.
 - Include a Leaflet map in the modal. Map clicks, marker dragging, coordinate fields,
   and selected search results remain synchronized.
 - Search is available while creating a location. Search only after the user explicitly

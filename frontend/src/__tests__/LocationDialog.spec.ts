@@ -45,6 +45,26 @@ beforeEach(() => {
   )
 })
 
+it('uses the standard white surface for every modal input', () => {
+  const wrapper = mount(LocationDialog, {
+    global: {
+      plugins: [createPinia()],
+      stubs: {
+        LocationMap: LocationMapStub,
+      },
+    },
+  })
+
+  const inputs = wrapper.findAll('input')
+
+  expect(inputs).toHaveLength(4)
+
+  for (const input of inputs) {
+    expect(input.classes()).toContain('bg-white')
+    expect(input.classes()).not.toContain('bg-base-100')
+  }
+})
+
 it('uses explicit search and fills a blank name from the selected result', async () => {
   vi.mocked(locationService.search).mockResolvedValue([
     {

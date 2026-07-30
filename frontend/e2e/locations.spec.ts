@@ -162,6 +162,17 @@ test('creates and edits locations from authenticated settings', async ({ page })
   await page.getByRole('button', { name: 'Add location' }).click()
   const dialog = page.getByRole('dialog', { name: 'Add location' })
   await expect(dialog).toBeVisible()
+  const modalInputs = dialog.locator('input')
+
+  await expect(modalInputs).toHaveCount(4)
+
+  for (let inputIndex = 0; inputIndex < 4; inputIndex += 1) {
+    await expect(modalInputs.nth(inputIndex)).toHaveCSS(
+      'background-color',
+      'rgb(255, 255, 255)',
+    )
+  }
+
   await dialog.getByPlaceholder('Park, forest, or trail system').fill('Harold Parker')
   await dialog.getByRole('button', { name: 'Search', exact: true }).click()
   await dialog
