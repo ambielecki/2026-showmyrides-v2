@@ -7,6 +7,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -36,6 +37,14 @@ class User extends Authenticatable
         static::creating(function (User $user): void {
             $user->external_id ??= (string) Str::uuid();
         });
+    }
+
+    /**
+     * Get the locations owned by the user.
+     */
+    public function locations(): HasMany
+    {
+        return $this->hasMany(Location::class);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 @plugin "daisyui" {
   themes: light --default;
-  include: alert, button, card, carousel, checkbox, drawer, fieldset, footer, input, link, loading, menu, navbar, rootscrolllock, toast;
+  include: alert, button, card, carousel, checkbox, drawer, fieldset, footer, input, join, link, list, loading, menu, modal, navbar, rootscrolllock, table, toast;
   logs: false;
 }
 
@@ -35,4 +35,9 @@
     min-width: 20rem;
     min-height: 100vh;
   }
+}
+
+.location-map-marker {
+  outline: 0.125rem solid color-mix(in oklab, var(--color-primary), transparent 65%);
+  outline-offset: 0.125rem;
 }

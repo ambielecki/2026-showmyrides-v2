@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'nominatim' => [
+        'base_url' => env('NOMINATIM_BASE_URL', 'https://nominatim.openstreetmap.org'),
+        'user_agent' => env(
+            'NOMINATIM_USER_AGENT',
+            'ShowMyRides/2.0 (+https://showmyrides.com)',
+        ),
+    ],
+
 ];

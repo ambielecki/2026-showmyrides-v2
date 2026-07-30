@@ -1,10 +1,19 @@
 <?php
 
 use App\Http\Controllers\Api\CurrentUserController;
+use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\Api\LocationSearchController;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/user', CurrentUserController::class)->middleware('auth:sanctum');
+
+Route::middleware('auth:sanctum')->group(function (): void {
+    Route::get('/location-search', LocationSearchController::class)
+        ->middleware('throttle:location-search');
+    Route::apiResource('locations', LocationController::class)
+        ->only(['index', 'store', 'update']);
+});
 
 if (app()->environment(['local', 'testing'])) {
     Route::get('/test/public', static function (): JsonResponse {

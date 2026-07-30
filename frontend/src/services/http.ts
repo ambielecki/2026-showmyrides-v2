@@ -42,6 +42,14 @@ export class HttpService {
     })
   }
 
+  patch<T>(path: string, body?: unknown): Promise<T> {
+    return this.request<T>(path, {
+      body,
+      method: 'PATCH',
+      requiresCsrf: true,
+    })
+  }
+
   async request<T>(path: string, options: RequestOptions = {}): Promise<T> {
     if (options.requiresCsrf) {
       await this.initializeCsrf()
