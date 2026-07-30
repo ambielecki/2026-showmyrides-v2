@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Contracts\GeocodingServiceInterface;
 use App\Data\LocationSearchResultData;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Client\RequestException;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class NominatimService
+class NominatimService implements GeocodingServiceInterface
 {
     /**
      * @return array<int, LocationSearchResultData>

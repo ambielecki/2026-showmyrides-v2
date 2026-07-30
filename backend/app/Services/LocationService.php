@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Contracts\LocationServiceInterface;
 use App\Data\LocationData;
 use App\Models\Location;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class LocationService
+class LocationService implements LocationServiceInterface
 {
     /**
      * @return LengthAwarePaginator<int, Location>

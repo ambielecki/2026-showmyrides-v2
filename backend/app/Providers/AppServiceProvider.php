@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Contracts\GeocodingServiceInterface;
+use App\Contracts\LocationServiceInterface;
+use App\Services\LocationService;
+use App\Services\NominatimService;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,7 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(LocationServiceInterface::class, LocationService::class);
+        $this->app->bind(GeocodingServiceInterface::class, NominatimService::class);
     }
 
     /**

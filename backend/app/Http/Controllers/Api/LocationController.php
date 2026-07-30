@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Contracts\LocationServiceInterface;
 use App\Data\LocationData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLocationRequest;
@@ -9,7 +10,6 @@ use App\Http\Requests\UpdateLocationRequest;
 use App\Http\Resources\LocationResource;
 use App\Models\Location;
 use App\Models\User;
-use App\Services\LocationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Gate;
 
 class LocationController extends Controller
 {
-    public function __construct(private LocationService $locationService) {}
+    public function __construct(private LocationServiceInterface $locationService) {}
 
     /**
      * Display a listing of the resource.

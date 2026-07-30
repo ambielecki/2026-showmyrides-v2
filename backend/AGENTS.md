@@ -164,12 +164,17 @@ The application will use Laravel Fortify for basic authentication with Laravel S
 
 ## Guidelines
 - PHP functions should have return types and typed arguments
-- Controllers should be thin and primarily handle getting data from the request and returning a response. Other logic should 
-be extracted to a service provider. 
+- Controllers should be thin and primarily handle getting data from the request and returning a response. Other logic should
+be extracted to a service.
 - Create request and response DTOs to make passing data between Controller and service layer explicit.
+- Application services should implement interfaces in `App\Contracts` to support dependency injection, testability, and mocking.
+- Consumers should constructor-inject service interfaces instead of concrete implementations. Bind each interface to its
+implementation in a service provider.
+- Use provider-neutral interface names for replaceable third-party integrations. Provider implementations may retain
+provider-specific names.
 - Create Pest unit and integration tests as appropriate
 - Do not use the PHP installed on the operating system, all PHP commands should be run in the showmyrides-v2-php-deploy container
     - Example for a Laravel migration `docker exec -it showmyrides-v2-php-deploy php artisan migrate`
     - The container working directory is `/var/wwww/html/backend` to match the backend directory
-- All models and related database tables should have an external_id column in addition the the standard id. This will be a 
+- All models and related database tables should have an external_id column in addition to the standard id. This will be a
 UUIDv4. We should never send the autoincrement id in an api response, only the external_id

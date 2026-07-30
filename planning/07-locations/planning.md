@@ -34,6 +34,9 @@ INSERT INTO locations (user_id, system_key, map_provider, name, latitude, longit
 
 - Create the model, controller, requests, DTOs, resources, policies, services, and tests
   needed for authenticated location management.
+- Define service interfaces for location management and provider-neutral geocoding, inject
+  them into controllers, and bind them to the current implementations in Laravel's service
+  container.
 - Users may list, create, and edit only their own locations. System locations are not
   editable.
 - Provide a backend-proxied OpenStreetMap Nominatim search. Public Nominatim does not
