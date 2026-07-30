@@ -5,7 +5,9 @@ import { homepageContent } from '@/data/homepage'
 
 <template>
   <div>
-    <section class="hero bg-base-200 min-h-[calc(100svh-4rem)]">
+    <section
+      class="hero bg-base-200 min-h-[calc(100svh-4rem)] bg-linear-to-br from-base-300 via-base-200 to-secondary/35"
+    >
       <div
         class="hero-content mx-auto grid w-full max-w-7xl grid-cols-1 gap-10 px-6 py-12 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:py-20"
       >
@@ -34,10 +36,10 @@ import { homepageContent } from '@/data/homepage'
           <article
             v-for="highlight in homepageContent.highlights"
             :key="highlight.title"
-            class="card card-border bg-base-100 h-full shadow-sm"
+            class="card card-border bg-base-300 h-full shadow-sm"
           >
             <div class="card-body">
-              <h3 class="card-title">{{ highlight.title }}</h3>
+              <h3 class="card-title text-xl">{{ highlight.title }}</h3>
               <p class="text-base-content/75 leading-relaxed">{{ highlight.copy }}</p>
             </div>
           </article>

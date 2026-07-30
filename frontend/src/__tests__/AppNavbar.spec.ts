@@ -44,26 +44,31 @@ async function mountNavbar(isAuthenticated: boolean, isAdmin = false) {
 }
 
 describe('AppNavbar', () => {
-  it('shows public account routes to logged-out visitors', async () => {
+  it('shows public routes in the account navigation for logged-out visitors', async () => {
     const wrapper = await mountNavbar(false)
-    const navigation = wrapper.get('nav[aria-label="Primary navigation"]')
+    const accountNavigation = wrapper.get('nav[aria-label="Account navigation"]')
 
-    expect(navigation.text()).toContain('Register')
-    expect(navigation.text()).toContain('Log In')
-    expect(navigation.text()).not.toContain('Rides')
+    expect(wrapper.find('nav[aria-label="Primary navigation"]').exists()).toBe(false)
+    expect(accountNavigation.text()).toContain('Register')
+    expect(accountNavigation.text()).toContain('Log In')
+    expect(accountNavigation.text()).not.toContain('Rides')
   })
 
-  it('shows ride and account routes to authenticated visitors', async () => {
+  it('separates primary and account routes for authenticated visitors', async () => {
     const wrapper = await mountNavbar(true)
-    const navigation = wrapper.get('nav[aria-label="Primary navigation"]')
+    const primaryNavigation = wrapper.get('nav[aria-label="Primary navigation"]')
+    const accountNavigation = wrapper.get('nav[aria-label="Account navigation"]')
 
-    expect(navigation.text()).toContain('Rides')
-    expect(navigation.text()).toContain('Add Ride')
-    expect(navigation.text()).toContain('Ride Overlay')
-    expect(navigation.text()).toContain('Settings')
-    expect(navigation.text()).toContain('Log Out')
-    expect(navigation.text()).not.toContain('Register')
-    expect(navigation.text()).not.toContain('Admin Tools')
+    expect(primaryNavigation.text()).toContain('Rides')
+    expect(primaryNavigation.text()).toContain('Add Ride')
+    expect(primaryNavigation.text()).toContain('Ride Overlay')
+    expect(primaryNavigation.text()).not.toContain('Settings')
+    expect(primaryNavigation.text()).not.toContain('Log Out')
+    expect(primaryNavigation.text()).not.toContain('Admin Tools')
+    expect(accountNavigation.text()).toContain('Settings')
+    expect(accountNavigation.text()).toContain('Log Out')
+    expect(accountNavigation.text()).not.toContain('Register')
+    expect(accountNavigation.text()).not.toContain('Rides')
   })
 
   it('adds the admin route for administrators', async () => {

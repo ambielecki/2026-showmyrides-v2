@@ -2,7 +2,11 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { RouterLink } from 'vue-router'
 
-import { getNavigationItems, homeNavigationItem } from '@/data/navigation'
+import {
+  getAccountNavigationItems,
+  getPrimaryNavigationItems,
+  homeNavigationItem,
+} from '@/data/navigation'
 
 const props = withDefaults(
   defineProps<{
@@ -24,10 +28,13 @@ const emit = defineEmits<{
 
 const drawerPanel = ref<HTMLElement | null>(null)
 const closeButton = ref<HTMLButtonElement | null>(null)
-const navigationItems = computed(() => [
+const primaryNavigationItems = computed(() => [
   homeNavigationItem,
-  ...getNavigationItems(props.isAuthenticated, props.isAdmin),
+  ...getPrimaryNavigationItems(props.isAuthenticated, props.isAdmin),
 ])
+const accountNavigationItems = computed(() =>
+  getAccountNavigationItems(props.isAuthenticated),
+)
 
 watch(
   () => props.isOpen,
@@ -105,7 +112,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
     <aside
       id="mobile-navigation"
       ref="drawerPanel"
-      class="bg-base-100 min-h-full w-[min(20rem,88vw)] p-4 shadow-2xl"
+      class="bg-base-100 flex min-h-full w-[min(20rem,88vw)] flex-col p-4 shadow-2xl"
       aria-label="Mobile navigation"
     >
       <div class="border-base-300 flex min-h-14 items-center justify-between border-b">
@@ -136,9 +143,27 @@ onUnmounted(() => document.removeEventListener('keydown', handleKeydown))
         </button>
       </div>
 
-      <nav aria-label="Mobile routes" class="pt-4">
+      <nav aria-label="Mobile primary navigation" class="pt-4">
         <ul class="menu w-full gap-1 p-0">
-          <li v-for="item in navigationItems" :key="item.routeName">
+          <li v-for="item in primaryNavigationItems" :key="item.routeName">
+            <RouterLink
+              :to="{ name: item.routeName }"
+              active-class="menu-active"
+              class="min-h-12 text-base font-semibold"
+              @click="closeDrawer"
+            >
+              {{ item.label }}
+            </RouterLink>
+          </li>
+        </ul>
+      </nav>
+
+      <nav
+        aria-label="Mobile account navigation"
+        class="border-base-300 mt-auto border-t pt-4"
+      >
+        <ul class="menu w-full gap-1 p-0">
+          <li v-for="item in accountNavigationItems" :key="item.routeName">
             <RouterLink
               :to="{ name: item.routeName }"
               active-class="menu-active"

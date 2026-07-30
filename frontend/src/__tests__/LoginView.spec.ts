@@ -25,6 +25,20 @@ beforeEach(() => {
 })
 
 describe('LoginView', () => {
+  it('uses a light elevated card with white form fields', async () => {
+    const pinia = createPinia()
+    setActivePinia(pinia)
+    const router = createTestRouter()
+    await router.push('/login')
+
+    const wrapper = mount(LoginView, {
+      global: { plugins: [pinia, router] },
+    })
+
+    expect(wrapper.get('.card').classes()).toContain('shadow-md')
+    expect(wrapper.get('input[name="email"]').classes()).toContain('bg-white')
+  })
+
   it('collects email before revealing and focusing the password field', async () => {
     const pinia = createPinia()
     setActivePinia(pinia)

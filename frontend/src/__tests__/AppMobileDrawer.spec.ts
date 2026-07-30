@@ -27,7 +27,11 @@ function createTestRouter() {
   })
 }
 
-async function mountDrawer(isOpen = false) {
+async function mountDrawer(
+  isOpen = false,
+  isAuthenticated = false,
+  isAdmin = false,
+) {
   const router = createTestRouter()
   await router.push('/')
 
@@ -35,8 +39,8 @@ async function mountDrawer(isOpen = false) {
     attachTo: document.body,
     props: {
       isOpen,
-      isAuthenticated: false,
-      isAdmin: false,
+      isAuthenticated,
+      isAdmin,
       toggleId: 'test-drawer-toggle',
     },
     global: {
@@ -46,14 +50,40 @@ async function mountDrawer(isOpen = false) {
 }
 
 describe('AppMobileDrawer', () => {
-  it('lists the routes available to the current visitor', async () => {
+  it('separates guest routes and anchors account actions at the bottom', async () => {
     const wrapper = await mountDrawer(true)
-    const navigation = wrapper.get('nav[aria-label="Mobile routes"]')
+    const primaryNavigation = wrapper.get(
+      'nav[aria-label="Mobile primary navigation"]',
+    )
+    const accountNavigation = wrapper.get(
+      'nav[aria-label="Mobile account navigation"]',
+    )
 
-    expect(navigation.text()).toContain('Home')
-    expect(navigation.text()).toContain('Register')
-    expect(navigation.text()).toContain('Log In')
-    expect(navigation.text()).not.toContain('Rides')
+    expect(primaryNavigation.text()).toContain('Home')
+    expect(primaryNavigation.text()).not.toContain('Register')
+    expect(primaryNavigation.text()).not.toContain('Rides')
+    expect(accountNavigation.text()).toContain('Register')
+    expect(accountNavigation.text()).toContain('Log In')
+    expect(accountNavigation.classes()).toContain('mt-auto')
+
+    wrapper.unmount()
+  })
+
+  it('places authenticated account actions below primary routes', async () => {
+    const wrapper = await mountDrawer(true, true, true)
+    const primaryNavigation = wrapper.get(
+      'nav[aria-label="Mobile primary navigation"]',
+    )
+    const accountNavigation = wrapper.get(
+      'nav[aria-label="Mobile account navigation"]',
+    )
+
+    expect(primaryNavigation.text()).toContain('Rides')
+    expect(primaryNavigation.text()).toContain('Admin Tools')
+    expect(primaryNavigation.text()).not.toContain('Settings')
+    expect(accountNavigation.text()).toContain('Settings')
+    expect(accountNavigation.text()).toContain('Log Out')
+    expect(accountNavigation.text()).not.toContain('Register')
 
     wrapper.unmount()
   })
@@ -79,7 +109,9 @@ describe('AppMobileDrawer', () => {
     const wrapper = await mountDrawer(true)
 
     await wrapper.get('label.drawer-overlay').trigger('click')
-    await wrapper.get('nav[aria-label="Mobile routes"] a').trigger('click')
+    await wrapper
+      .get('nav[aria-label="Mobile primary navigation"] a')
+      .trigger('click')
 
     expect(wrapper.emitted('close')).toHaveLength(2)
     wrapper.unmount()

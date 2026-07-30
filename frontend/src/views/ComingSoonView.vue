@@ -7,7 +7,7 @@ defineProps<{
 
 <template>
   <section class="mx-auto w-full max-w-3xl px-6 py-10 md:py-14">
-    <div class="card card-border bg-base-100 shadow-sm">
+    <div class="card card-border bg-base-100 shadow-md">
       <div class="card-body">
         <p class="text-primary text-sm font-extrabold tracking-widest uppercase">Coming later</p>
         <h1 class="card-title text-3xl">{{ title }}</h1>

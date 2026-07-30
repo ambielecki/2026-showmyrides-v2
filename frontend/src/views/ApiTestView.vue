@@ -63,7 +63,7 @@ async function callEndpoint(endpoint: 'authenticated' | 'public'): Promise<void>
       </button>
     </div>
 
-    <div class="card card-border bg-base-100 mt-8 shadow-sm">
+    <div class="card card-border bg-base-100 mt-8 shadow-md">
       <div class="card-body">
         <h2 class="card-title">Latest result</h2>
         <p aria-live="polite">{{ result }}</p>
