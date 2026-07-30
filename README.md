@@ -39,7 +39,12 @@ through `/sanctum/csrf-cookie` and sends all API requests with credentials.
 
 The login page collects email and password in two steps. Authenticated routes are
 protected by Vue Router, and the navbar changes between guest, user, and administrator
-navigation.
+navigation. On the password step, users can opt in to a 30-day remembered login. The
+duration is configured in minutes:
+
+```dotenv
+AUTH_REMEMBER_DURATION=43200
+```
 
 Optional local Playwright integration credentials can be configured without committing
 their values:

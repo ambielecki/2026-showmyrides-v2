@@ -55,11 +55,45 @@ describe('LoginView', () => {
     await nextTick()
 
     const passwordInput = wrapper.get<HTMLInputElement>('input[name="password"]')
+    const rememberInput = wrapper.get<HTMLInputElement>('input[name="remember"]')
+    const rememberLabel = rememberInput.element.closest('label')
 
     expect(wrapper.text()).toContain('Step 2 of 2')
     expect(document.activeElement).toBe(passwordInput.element)
+    expect(rememberInput.element.checked).toBe(false)
+    expect(rememberLabel).not.toBeNull()
+    expect(rememberLabel?.classList.contains('flex')).toBe(true)
+    expect(rememberLabel?.classList.contains('items-center')).toBe(true)
+    expect(rememberLabel?.classList.contains('gap-4')).toBe(true)
+    expect(rememberInput.classes()).toContain('bg-white')
+    expect(rememberInput.classes()).toContain('checked:bg-primary')
+    expect(rememberInput.classes()).toContain('checked:text-primary-content')
 
     wrapper.unmount()
+  })
+
+  it('retains the remember choice when returning to the email step', async () => {
+    const pinia = createPinia()
+    setActivePinia(pinia)
+    const router = createTestRouter()
+    await router.push('/login')
+
+    const wrapper = mount(LoginView, {
+      global: { plugins: [pinia, router] },
+    })
+
+    expect(wrapper.find('input[name="remember"]').exists()).toBe(false)
+
+    await wrapper.get('input[name="email"]').setValue('rider@example.com')
+    await wrapper.get('form').trigger('submit')
+    await wrapper.get('input[name="remember"]').setValue(true)
+    await wrapper.get('button[type="button"]').trigger('click')
+
+    expect(wrapper.find('input[name="remember"]').exists()).toBe(false)
+
+    await wrapper.get('form').trigger('submit')
+
+    expect(wrapper.get<HTMLInputElement>('input[name="remember"]').element.checked).toBe(true)
   })
 
   it('submits credentials and navigates to rides', async () => {
@@ -77,12 +111,14 @@ describe('LoginView', () => {
     await wrapper.get('input[name="email"]').setValue('rider@example.com')
     await wrapper.get('form').trigger('submit')
     await wrapper.get('input[name="password"]').setValue('password')
+    await wrapper.get('input[name="remember"]').setValue(true)
     await wrapper.get('form').trigger('submit')
     await flushPromises()
 
     expect(login).toHaveBeenCalledWith({
       email: 'rider@example.com',
       password: 'password',
+      remember: true,
     })
     expect(router.currentRoute.value.name).toBe('rides')
   })

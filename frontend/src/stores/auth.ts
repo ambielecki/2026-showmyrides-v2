@@ -14,12 +14,16 @@ interface UserResponse {
   data: AuthenticatedUser
 }
 
-export interface LoginCredentials {
+interface AccountCredentials {
   email: string
   password: string
 }
 
-export interface RegistrationDetails extends LoginCredentials {
+export interface LoginCredentials extends AccountCredentials {
+  remember: boolean
+}
+
+export interface RegistrationDetails extends AccountCredentials {
   name: string
   password_confirmation: string
 }

@@ -178,7 +178,56 @@ test('completes the two-step login and logout flow with mocked auth', async ({ p
   await expect(page.getByText('Step 2 of 2')).toBeVisible()
 
   await page.getByLabel('Password').fill('password')
-  await page.getByRole('button', { name: 'Log In', exact: true }).click()
+  const rememberCheckbox = page.getByRole('checkbox', {
+    name: 'Remember me for 30 days',
+  })
+  await expect(rememberCheckbox).not.toBeChecked()
+
+  const rememberLabel = page.locator('label').filter({ has: rememberCheckbox })
+  const rememberText = page.getByText('Remember me for 30 days', {
+    exact: true,
+  })
+  const loginButton = page.getByRole('button', { name: 'Log In', exact: true })
+  const rememberCheckboxBox = await rememberCheckbox.boundingBox()
+  const rememberLabelBox = await rememberLabel.boundingBox()
+  const rememberTextBox = await rememberText.boundingBox()
+  const loginButtonBox = await loginButton.boundingBox()
+
+  expect(rememberCheckboxBox).not.toBeNull()
+  expect(rememberLabelBox).not.toBeNull()
+  expect(rememberTextBox).not.toBeNull()
+  expect(loginButtonBox).not.toBeNull()
+  expect(
+    rememberTextBox!.x -
+      (rememberCheckboxBox!.x + rememberCheckboxBox!.width),
+  ).toBeGreaterThanOrEqual(16)
+  expect(
+    loginButtonBox!.y - (rememberLabelBox!.y + rememberLabelBox!.height),
+  ).toBeGreaterThanOrEqual(20)
+  await expect(rememberCheckbox).toHaveCSS(
+    'background-color',
+    'rgb(255, 255, 255)',
+  )
+
+  await rememberCheckbox.check()
+  await expect(rememberCheckbox).toHaveCSS(
+    'background-color',
+    'rgb(53, 94, 59)',
+  )
+
+  const loginRequestPromise = page.waitForRequest(
+    (request) =>
+      request.method() === 'POST' &&
+      new URL(request.url()).pathname === '/login',
+  )
+  await loginButton.click()
+  const loginRequest = await loginRequestPromise
+
+  expect(loginRequest.postDataJSON()).toMatchObject({
+    email: 'rider@example.com',
+    password: 'password',
+    remember: true,
+  })
 
   await expect(page).toHaveURL('/rides')
   await expect(page.getByRole('link', { name: 'Settings' })).toBeVisible()
