@@ -13,11 +13,10 @@ const publicNavigationItems: NavigationItem[] = [
   { label: 'Log In', routeName: 'login' },
 ]
 
-const authenticatedNavigationItems: NavigationItem[] = [
+const authenticatedPrimaryNavigationItems: NavigationItem[] = [
   { label: 'Rides', routeName: 'rides' },
   { label: 'Add Ride', routeName: 'add-ride' },
   { label: 'Ride Overlay', routeName: 'ride-overlay' },
-  { label: 'Settings', routeName: 'settings' },
 ]
 
 const adminNavigationItem: NavigationItem = {
@@ -25,15 +24,27 @@ const adminNavigationItem: NavigationItem = {
   routeName: 'admin-tools',
 }
 
-export function getNavigationItems(
+const authenticatedAccountNavigationItems: NavigationItem[] = [
+  { label: 'Settings', routeName: 'settings' },
+]
+
+export function getPrimaryNavigationItems(
   isAuthenticated: boolean,
   isAdmin: boolean,
 ): NavigationItem[] {
   if (!isAuthenticated) {
-    return publicNavigationItems
+    return []
   }
 
   return isAdmin
-    ? [...authenticatedNavigationItems, adminNavigationItem]
-    : authenticatedNavigationItems
+    ? [...authenticatedPrimaryNavigationItems, adminNavigationItem]
+    : authenticatedPrimaryNavigationItems
+}
+
+export function getAccountNavigationItems(
+  isAuthenticated: boolean,
+): NavigationItem[] {
+  return isAuthenticated
+    ? authenticatedAccountNavigationItems
+    : publicNavigationItems
 }

@@ -45,7 +45,7 @@ async function submit(): Promise<void> {
 
 <template>
   <section class="mx-auto w-full max-w-xl px-4 py-8 md:px-8 md:py-12">
-    <div class="card card-border bg-base-100 shadow-sm">
+    <div class="card card-border bg-base-100 shadow-md">
       <div class="card-body gap-6">
         <div class="space-y-2">
           <p class="text-primary text-sm font-bold tracking-wider uppercase">Create an account</p>
@@ -64,7 +64,7 @@ async function submit(): Promise<void> {
               type="text"
               autocomplete="name"
               required
-              class="input w-full"
+              class="input bg-white w-full"
               :class="{ 'input-error': fieldError('name') }"
               aria-labelledby="register-name-label"
               :aria-invalid="Boolean(fieldError('name'))"
@@ -83,7 +83,7 @@ async function submit(): Promise<void> {
               type="email"
               autocomplete="email"
               required
-              class="input w-full"
+              class="input bg-white w-full"
               :class="{ 'input-error': fieldError('email') }"
               aria-labelledby="register-email-label"
               :aria-invalid="Boolean(fieldError('email'))"
@@ -102,7 +102,7 @@ async function submit(): Promise<void> {
               type="password"
               autocomplete="new-password"
               required
-              class="input w-full"
+              class="input bg-white w-full"
               :class="{ 'input-error': fieldError('password') }"
               aria-labelledby="register-password-label"
               :aria-invalid="Boolean(fieldError('password'))"
@@ -127,7 +127,7 @@ async function submit(): Promise<void> {
               type="password"
               autocomplete="new-password"
               required
-              class="input w-full"
+              class="input bg-white w-full"
               aria-labelledby="register-password-confirmation-label"
             />
           </fieldset>

@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="footer footer-center bg-base-200 border-base-300 border-t px-6 py-6"
+    class="footer footer-center bg-neutral text-neutral-content border-neutral-content/20 border-t px-6 py-6"
   >
     <div class="flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-6">
       <p>© 2026 ShowMyRides. All rights reserved.</p>

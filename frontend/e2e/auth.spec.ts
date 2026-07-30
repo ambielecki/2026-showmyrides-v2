@@ -184,12 +184,45 @@ test('completes the two-step login and logout flow with mocked auth', async ({ p
   await expect(page.getByRole('link', { name: 'Settings' })).toBeVisible()
   await expect(page.getByRole('link', { name: 'Register' })).toBeHidden()
 
+  const homepageLinkBox = await page
+    .locator('header')
+    .getByRole('link', { name: 'ShowMyRides' })
+    .boundingBox()
+  const primaryNavigationBox = await page
+    .getByRole('navigation', { name: 'Primary navigation' })
+    .boundingBox()
+  const accountNavigationBox = await page
+    .getByRole('navigation', { name: 'Account navigation' })
+    .boundingBox()
+
+  expect(homepageLinkBox).not.toBeNull()
+  expect(primaryNavigationBox).not.toBeNull()
+  expect(accountNavigationBox).not.toBeNull()
+  expect(primaryNavigationBox!.x).toBeGreaterThan(homepageLinkBox!.x)
+  expect(accountNavigationBox!.x).toBeGreaterThan(
+    primaryNavigationBox!.x + primaryNavigationBox!.width,
+  )
+
   await page.setViewportSize({ width: 390, height: 844 })
   await page.getByRole('button', { name: 'Open navigation' }).click()
 
   const drawer = page.getByRole('complementary', { name: 'Mobile navigation' })
   await expect(drawer.getByRole('link', { name: 'Settings' })).toBeVisible()
   await expect(drawer.getByRole('link', { name: 'Register' })).toBeHidden()
+
+  const mobilePrimaryNavigationBox = await drawer
+    .getByRole('navigation', { name: 'Mobile primary navigation' })
+    .boundingBox()
+  const mobileAccountNavigationBox = await drawer
+    .getByRole('navigation', { name: 'Mobile account navigation' })
+    .boundingBox()
+
+  expect(mobilePrimaryNavigationBox).not.toBeNull()
+  expect(mobileAccountNavigationBox).not.toBeNull()
+  expect(mobileAccountNavigationBox!.y).toBeGreaterThan(
+    mobilePrimaryNavigationBox!.y + mobilePrimaryNavigationBox!.height,
+  )
+
   await drawer.getByRole('button', { name: 'Log Out' }).click()
 
   await expect(page).toHaveURL('/')

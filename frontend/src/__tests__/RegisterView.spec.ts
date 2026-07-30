@@ -7,6 +7,27 @@ import { flushPromises, mount } from '@vue/test-utils'
 import RegisterView from '@/views/RegisterView.vue'
 import { useAuthStore } from '@/stores/auth'
 
+it('uses a light elevated card with white form fields', async () => {
+  const pinia = createPinia()
+  setActivePinia(pinia)
+  const router = createRouter({
+    history: createMemoryHistory(),
+    routes: [
+      { path: '/register', name: 'register', component: RegisterView },
+      { path: '/login', name: 'login', component: defineComponent({ template: '<div />' }) },
+      { path: '/rides', name: 'rides', component: defineComponent({ template: '<div />' }) },
+    ],
+  })
+  await router.push('/register')
+
+  const wrapper = mount(RegisterView, {
+    global: { plugins: [pinia, router] },
+  })
+
+  expect(wrapper.get('.card').classes()).toContain('shadow-md')
+  expect(wrapper.findAll('input').every((input) => input.classes().includes('bg-white'))).toBe(true)
+})
+
 it('registers an account and navigates to rides', async () => {
   const pinia = createPinia()
   setActivePinia(pinia)

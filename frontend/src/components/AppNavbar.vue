@@ -2,7 +2,10 @@
 import { computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
-import { getNavigationItems } from '@/data/navigation'
+import {
+  getAccountNavigationItems,
+  getPrimaryNavigationItems,
+} from '@/data/navigation'
 
 const props = withDefaults(
   defineProps<{
@@ -22,8 +25,11 @@ const emit = defineEmits<{
 }>()
 
 const menuButton = ref<HTMLButtonElement | null>(null)
-const navigationItems = computed(() =>
-  getNavigationItems(props.isAuthenticated, props.isAdmin),
+const primaryNavigationItems = computed(() =>
+  getPrimaryNavigationItems(props.isAuthenticated, props.isAdmin),
+)
+const accountNavigationItems = computed(() =>
+  getAccountNavigationItems(props.isAuthenticated),
 )
 
 function focusMenuButton(): void {
@@ -35,26 +41,43 @@ defineExpose({ focusMenuButton })
 
 <template>
   <header
-    class="navbar bg-base-100/95 border-base-300 fixed top-0 z-40 min-h-16 w-full border-b px-4 shadow-sm backdrop-blur-sm md:px-8"
+    class="navbar bg-neutral text-neutral-content border-neutral-content/20 fixed top-0 z-40 min-h-16 w-full border-b px-4 shadow-md md:px-8"
   >
-    <div class="navbar-start">
+    <div class="navbar-start flex-1 gap-2">
       <RouterLink
         :to="{ name: 'home' }"
-        class="btn btn-ghost text-primary px-2 text-lg font-extrabold"
+        class="btn btn-ghost text-neutral-content hover:bg-neutral-content/15 px-2 text-lg font-extrabold"
       >
         ShowMyRides
       </RouterLink>
-    </div>
 
-    <div class="navbar-end">
-      <nav aria-label="Primary navigation" class="hidden md:block">
+      <nav
+        v-if="primaryNavigationItems.length"
+        aria-label="Primary navigation"
+        class="hidden lg:block"
+      >
         <ul class="menu menu-horizontal items-center gap-1 p-0">
-          <li v-for="item in navigationItems" :key="item.routeName">
+          <li v-for="item in primaryNavigationItems" :key="item.routeName">
             <RouterLink
               :to="{ name: item.routeName }"
-              active-class="menu-active"
-              class="font-semibold"
-              :class="{ 'btn btn-sm': !isAuthenticated }"
+              active-class="bg-neutral-content/20"
+              class="text-neutral-content hover:bg-neutral-content/15 font-semibold"
+            >
+              {{ item.label }}
+            </RouterLink>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="navbar-end w-auto">
+      <nav aria-label="Account navigation" class="hidden lg:block">
+        <ul class="menu menu-horizontal items-center gap-1 p-0">
+          <li v-for="item in accountNavigationItems" :key="item.routeName">
+            <RouterLink
+              :to="{ name: item.routeName }"
+              active-class="bg-neutral-content/20"
+              class="text-neutral-content hover:bg-neutral-content/15 font-semibold"
             >
               {{ item.label }}
             </RouterLink>
@@ -62,7 +85,7 @@ defineExpose({ focusMenuButton })
           <li v-if="isAuthenticated">
             <button
               type="button"
-              class="font-semibold"
+              class="text-neutral-content hover:bg-neutral-content/15 font-semibold"
               :disabled="isLoggingOut"
               @click="emit('logout')"
             >
@@ -75,7 +98,7 @@ defineExpose({ focusMenuButton })
       <button
         ref="menuButton"
         type="button"
-        class="btn btn-ghost btn-square drawer-button md:hidden"
+        class="btn btn-ghost btn-square drawer-button text-neutral-content hover:bg-neutral-content/15 lg:hidden"
         aria-label="Open navigation"
         aria-controls="mobile-navigation"
         :aria-expanded="drawerOpen"

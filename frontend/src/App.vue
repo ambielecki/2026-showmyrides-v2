@@ -73,7 +73,7 @@ async function handleLogout(): Promise<void> {
       aria-hidden="true"
     />
 
-    <div class="drawer-content bg-base-100 flex min-h-screen flex-col">
+    <div class="drawer-content bg-base-200 flex min-h-screen flex-col">
       <AppNavbar
         ref="navbar"
         :is-authenticated="isAuthenticated"
