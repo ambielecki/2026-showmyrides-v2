@@ -38,15 +38,75 @@ test('registration validates the submitted account details', function () {
 test('a user can log in with valid credentials', function () {
     $user = User::factory()->create([
         'email' => 'rider@example.com',
+        'remember_token' => null,
     ]);
+    $rememberCookieName = auth('web')->getRecallerName();
+
+    $response = $this->postJson('/login', [
+        'email' => $user->email,
+        'password' => 'password',
+        'remember' => false,
+    ])->assertOk()
+        ->assertJson(['two_factor' => false])
+        ->assertCookieMissing($rememberCookieName);
+
+    $this->assertAuthenticatedAs($user);
+
+    expect($user->refresh()->getRememberToken())->toBeEmpty()
+        ->and($response->getCookie($rememberCookieName, false))->toBeNull()
+        ->and(config('auth.guards.web.remember'))->toBe(43200);
+});
+
+test('a user can request a thirty day remembered login', function () {
+    $user = User::factory()->create([
+        'email' => 'rider@example.com',
+        'remember_token' => null,
+    ]);
+    $rememberCookieName = auth('web')->getRecallerName();
 
     $this->postJson('/login', [
         'email' => $user->email,
         'password' => 'password',
+        'remember' => true,
     ])->assertOk()
-        ->assertJson(['two_factor' => false]);
+        ->assertCookie($rememberCookieName)
+        ->assertCookieNotExpired($rememberCookieName);
 
     $this->assertAuthenticatedAs($user);
+
+    expect($user->refresh()->getRememberToken())->not->toBeNull()
+        ->and(config('auth.guards.web.remember'))->toBe(43200);
+});
+
+test('logout clears a remembered login and rotates its token', function () {
+    $user = User::factory()->create([
+        'email' => 'rider@example.com',
+        'remember_token' => null,
+    ]);
+    $rememberCookieName = auth('web')->getRecallerName();
+    $loginResponse = $this->postJson('/login', [
+        'email' => $user->email,
+        'password' => 'password',
+        'remember' => true,
+    ]);
+    $rememberCookieValue = $loginResponse
+        ->getCookie($rememberCookieName)
+        ?->getValue();
+    $originalRememberToken = $user->refresh()->getRememberToken();
+
+    expect($rememberCookieValue)->not->toBeNull()
+        ->and($originalRememberToken)->not->toBeNull();
+
+    request()->cookies->set($rememberCookieName, $rememberCookieValue);
+    auth('web')->logout();
+
+    $forgottenRememberCookie = app('cookie')->queued($rememberCookieName);
+
+    $this->assertGuest();
+
+    expect($forgottenRememberCookie)->not->toBeNull()
+        ->and($forgottenRememberCookie->getExpiresTime())->toBeLessThan(now()->timestamp)
+        ->and($user->refresh()->getRememberToken())->not->toBe($originalRememberToken);
 });
 
 test('invalid credentials return a validation error without authenticating', function () {

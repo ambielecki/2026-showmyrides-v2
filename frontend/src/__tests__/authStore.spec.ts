@@ -35,11 +35,13 @@ describe('auth store', () => {
     await authStore.login({
       email: rider.email,
       password: 'password',
+      remember: false,
     })
 
     expect(post).toHaveBeenCalledWith('/login', {
       email: rider.email,
       password: 'password',
+      remember: false,
     })
     expect(authStore.user).toEqual(rider)
     expect(authStore.isAuthenticated).toBe(true)

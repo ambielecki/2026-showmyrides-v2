@@ -17,6 +17,7 @@ const validationErrors = ref<ValidationErrors>({})
 const form = reactive({
   email: '',
   password: '',
+  remember: false,
 })
 
 function fieldError(field: keyof typeof form): string | undefined {
@@ -142,6 +143,16 @@ async function submit(): Promise<void> {
                 {{ fieldError('password') ?? fieldError('email') }}
               </p>
             </fieldset>
+
+            <label class="label cursor-pointer justify-start gap-3 py-2">
+              <input
+                v-model="form.remember"
+                name="remember"
+                type="checkbox"
+                class="checkbox"
+              />
+              <span class="text-base font-medium">Remember me for 30 days</span>
+            </label>
           </template>
 
           <button

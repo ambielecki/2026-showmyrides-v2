@@ -178,7 +178,25 @@ test('completes the two-step login and logout flow with mocked auth', async ({ p
   await expect(page.getByText('Step 2 of 2')).toBeVisible()
 
   await page.getByLabel('Password').fill('password')
+  const rememberCheckbox = page.getByRole('checkbox', {
+    name: 'Remember me for 30 days',
+  })
+  await expect(rememberCheckbox).not.toBeChecked()
+  await rememberCheckbox.check()
+
+  const loginRequestPromise = page.waitForRequest(
+    (request) =>
+      request.method() === 'POST' &&
+      new URL(request.url()).pathname === '/login',
+  )
   await page.getByRole('button', { name: 'Log In', exact: true }).click()
+  const loginRequest = await loginRequestPromise
+
+  expect(loginRequest.postDataJSON()).toMatchObject({
+    email: 'rider@example.com',
+    password: 'password',
+    remember: true,
+  })
 
   await expect(page).toHaveURL('/rides')
   await expect(page.getByRole('link', { name: 'Settings' })).toBeVisible()
