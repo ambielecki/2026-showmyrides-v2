@@ -35,3 +35,4 @@ This project is a web application running with a Vue 3 frontend, PHP 8.5 backend
 
 ## Additional Instructions
 - The backend and frontend directories contain AGENTS.md files with instructions for the relevant portions of the code
+- Always ask clarifying questions in either plan mode or in response to prompts
