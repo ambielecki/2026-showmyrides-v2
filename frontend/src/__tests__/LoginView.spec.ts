@@ -56,10 +56,18 @@ describe('LoginView', () => {
 
     const passwordInput = wrapper.get<HTMLInputElement>('input[name="password"]')
     const rememberInput = wrapper.get<HTMLInputElement>('input[name="remember"]')
+    const rememberLabel = rememberInput.element.closest('label')
 
     expect(wrapper.text()).toContain('Step 2 of 2')
     expect(document.activeElement).toBe(passwordInput.element)
     expect(rememberInput.element.checked).toBe(false)
+    expect(rememberLabel).not.toBeNull()
+    expect(rememberLabel?.classList.contains('flex')).toBe(true)
+    expect(rememberLabel?.classList.contains('items-center')).toBe(true)
+    expect(rememberLabel?.classList.contains('gap-4')).toBe(true)
+    expect(rememberInput.classes()).toContain('bg-white')
+    expect(rememberInput.classes()).toContain('checked:bg-primary')
+    expect(rememberInput.classes()).toContain('checked:text-primary-content')
 
     wrapper.unmount()
   })

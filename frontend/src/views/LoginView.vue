@@ -144,12 +144,12 @@ async function submit(): Promise<void> {
               </p>
             </fieldset>
 
-            <label class="label cursor-pointer justify-start gap-3 py-2">
+            <label class="flex cursor-pointer items-center gap-4 py-2">
               <input
                 v-model="form.remember"
                 name="remember"
                 type="checkbox"
-                class="checkbox"
+                class="checkbox bg-white checked:bg-primary checked:text-primary-content"
               />
               <span class="text-base font-medium">Remember me for 30 days</span>
             </label>
