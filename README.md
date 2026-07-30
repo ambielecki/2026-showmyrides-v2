@@ -19,6 +19,8 @@ APP_URL=http://localhost:8080
 FRONTEND_URL=http://localhost:5173
 SANCTUM_STATEFUL_DOMAINS=localhost:5173
 SESSION_DOMAIN=null
+NOMINATIM_BASE_URL=https://nominatim.openstreetmap.org
+NOMINATIM_USER_AGENT="ShowMyRides/2.0 (+https://showmyrides.com)"
 ```
 
 Install and start the frontend with Node 26:
@@ -56,6 +58,18 @@ TEST_USER_PASSWORD=
 
 The auth integration test creates this regular, non-administrator test user when it does
 not already exist.
+
+## Locations
+
+Authenticated users can manage their parks, forests, and trail systems from
+`/settings/locations`. The Laravel API stores user-owned locations and installs Watopia
+and Makuri Islands as protected system locations for future ride selection.
+
+The create and edit dialog includes a Leaflet map backed by OpenStreetMap tiles. Location
+creation can explicitly search OpenStreetMap Nominatim through the backend proxy; the
+proxy identifies the application, caches results for 24 hours, and enforces public
+service rate limits. Manual coordinate entry remains available when search is
+unavailable.
 
 ## Verification
 

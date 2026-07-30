@@ -11,8 +11,10 @@ import ApiTestView from '@/views/ApiTestView.vue'
 import ComingSoonView from '@/views/ComingSoonView.vue'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
+import LocationsView from '@/views/LocationsView.vue'
 import NotificationTestView from '@/views/NotificationTestView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import SettingsView from '@/views/SettingsView.vue'
 import { useAlertStore } from '@/stores/alerts'
 import { useAuthStore } from '@/stores/auth'
 
@@ -68,12 +70,14 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/settings',
     name: 'settings',
-    component: ComingSoonView,
-    props: {
-      title: 'Settings',
-      description: 'Account settings will be available in a future update.',
-    },
+    component: SettingsView,
     meta: { requiresAuth: true, title: 'Settings' },
+  },
+  {
+    path: '/settings/locations',
+    name: 'settings-locations',
+    component: LocationsView,
+    meta: { requiresAuth: true, title: 'Locations' },
   },
   {
     path: '/admin',
