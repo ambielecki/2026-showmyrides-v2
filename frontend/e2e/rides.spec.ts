@@ -124,6 +124,34 @@ test('filters rides and presents a responsive route detail with control-free map
   })
   await expect(deleteButton).toHaveCSS('background-color', errorBackground)
   await expect(deleteButton).toHaveCSS('color', 'rgb(255, 255, 255)')
+  const deleteHoverContrast = await deleteButton.evaluate((button) => {
+    const channels = (color: string): number[] =>
+      color.match(/[\d.]+/g)?.slice(0, 3).map(Number) ?? []
+    const luminance = (color: string): number => {
+      const normalizedChannels = channels(color).map((channel) => {
+        const normalized = channel / 255
+
+        return normalized <= 0.04045
+          ? normalized / 12.92
+          : ((normalized + 0.055) / 1.055) ** 2.4
+      })
+
+      return (
+        normalizedChannels[0]! * 0.2126 +
+        normalizedChannels[1]! * 0.7152 +
+        normalizedChannels[2]! * 0.0722
+      )
+    }
+    const styles = getComputedStyle(button)
+    const backgroundLuminance = luminance(styles.backgroundColor)
+    const textLuminance = luminance(styles.color)
+
+    return (
+      (Math.max(backgroundLuminance, textLuminance) + 0.05) /
+      (Math.min(backgroundLuminance, textLuminance) + 0.05)
+    )
+  })
+  expect(deleteHoverContrast).toBeGreaterThanOrEqual(4.5)
 
   const showRouteCheckbox = page.getByLabel('Show route')
   await expect(showRouteCheckbox).toBeChecked()

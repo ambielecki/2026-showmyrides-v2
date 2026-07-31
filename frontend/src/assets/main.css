@@ -21,6 +21,8 @@
   --color-secondary-content: #1f2c1f;
   --color-neutral: #1f3523;
   --color-neutral-content: #ffffff;
+  --color-error: #b91c1c;
+  --color-error-content: #ffffff;
   --radius-selector: 0.5rem;
   --radius-field: 0.5rem;
   --radius-box: 0.75rem;
