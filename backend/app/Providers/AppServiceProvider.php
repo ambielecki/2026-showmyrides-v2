@@ -2,10 +2,18 @@
 
 namespace App\Providers;
 
+use App\Contracts\FitFileDecoderInterface;
 use App\Contracts\GeocodingServiceInterface;
 use App\Contracts\LocationServiceInterface;
+use App\Contracts\RideFitProcessingServiceInterface;
+use App\Contracts\RideProcessingLauncherInterface;
+use App\Contracts\RideServiceInterface;
+use App\Services\ArtisanRideProcessingLauncher;
 use App\Services\LocationService;
 use App\Services\NominatimService;
+use App\Services\RideFitProcessingService;
+use App\Services\RideService;
+use App\Services\SportlogFitFileDecoder;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(LocationServiceInterface::class, LocationService::class);
         $this->app->bind(GeocodingServiceInterface::class, NominatimService::class);
+        $this->app->bind(FitFileDecoderInterface::class, SportlogFitFileDecoder::class);
+        $this->app->bind(RideFitProcessingServiceInterface::class, RideFitProcessingService::class);
+        $this->app->bind(RideProcessingLauncherInterface::class, ArtisanRideProcessingLauncher::class);
+        $this->app->bind(RideServiceInterface::class, RideService::class);
     }
 
     /**

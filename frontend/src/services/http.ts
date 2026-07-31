@@ -50,6 +50,13 @@ export class HttpService {
     })
   }
 
+  delete<T>(path: string): Promise<T> {
+    return this.request<T>(path, {
+      method: 'DELETE',
+      requiresCsrf: true,
+    })
+  }
+
   async request<T>(path: string, options: RequestOptions = {}): Promise<T> {
     if (options.requiresCsrf) {
       await this.initializeCsrf()
@@ -59,7 +66,9 @@ export class HttpService {
       Accept: 'application/json',
     })
 
-    if (options.body !== undefined) {
+    const isFormData = options.body instanceof FormData
+
+    if (options.body !== undefined && !isFormData) {
       headers.set('Content-Type', 'application/json')
     }
 
@@ -71,8 +80,15 @@ export class HttpService {
       }
     }
 
+    const requestBody: BodyInit | undefined =
+      options.body === undefined
+        ? undefined
+        : isFormData
+          ? (options.body as FormData)
+          : JSON.stringify(options.body)
+
     const response = await fetch(this.url(path), {
-      body: options.body === undefined ? undefined : JSON.stringify(options.body),
+      body: requestBody,
       credentials: 'include',
       headers,
       method: options.method ?? 'GET',

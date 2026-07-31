@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f4f3f7a6b527c0e1b1bbd744b41a8c26",
+    "content-hash": "bcec1708dc8e892e559e086175362b2c",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -4177,6 +4177,55 @@
                 }
             ],
             "time": "2026-07-16T10:28:45+00:00"
+        },
+        {
+            "name": "sportlog/fit",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sportlog/fit.git",
+                "reference": "3e4a2849a9047d8e090f793d1712f12e2de9dfd0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sportlog/fit/zipball/3e4a2849a9047d8e090f793d1712f12e2de9dfd0",
+                "reference": "3e4a2849a9047d8e090f793d1712f12e2de9dfd0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "psr/log": "^3.0"
+            },
+            "require-dev": {
+                "nette/php-generator": "^4.2",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^12.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Sportlog\\FIT\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Johannes Aberidis"
+                }
+            ],
+            "description": "A decoder for FIT files",
+            "keywords": [
+                "Fit",
+                "garmin"
+            ],
+            "support": {
+                "issues": "https://github.com/sportlog/fit/issues",
+                "source": "https://github.com/sportlog/fit/tree/v0.6.0"
+            },
+            "time": "2026-05-01T13:19:56+00:00"
         },
         {
             "name": "symfony/clock",

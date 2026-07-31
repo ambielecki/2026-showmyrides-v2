@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 #[Fillable(['user_id', 'system_key', 'map_provider', 'name', 'latitude', 'longitude'])]
@@ -42,6 +43,14 @@ class Location extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the rides assigned to the location.
+     */
+    public function rides(): HasMany
+    {
+        return $this->hasMany(Ride::class);
     }
 
     /**

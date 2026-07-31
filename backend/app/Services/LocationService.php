@@ -7,6 +7,7 @@ use App\Data\LocationData;
 use App\Models\Location;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class LocationService implements LocationServiceInterface
 {
@@ -18,6 +19,18 @@ class LocationService implements LocationServiceInterface
         return $user->locations()
             ->latest()
             ->paginate($perPage);
+    }
+
+    /**
+     * @return Collection<int, Location>
+     */
+    public function optionsForUser(User $user): Collection
+    {
+        return Location::query()
+            ->whereNull('user_id')
+            ->orWhere('user_id', $user->id)
+            ->orderBy('name')
+            ->get(['id', 'external_id', 'name', 'map_provider']);
     }
 
     public function createForUser(User $user, LocationData $data): Location
