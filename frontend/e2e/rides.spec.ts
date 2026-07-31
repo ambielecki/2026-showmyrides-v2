@@ -99,6 +99,14 @@ test('filters rides and presents a responsive route detail with control-free map
   await expect(page.getByRole('heading', { name: 'Morning Loop' })).toBeVisible()
   await expect(page.getByRole('application', { name: 'Map of Morning Loop' })).toBeVisible()
   await expect(page.getByText('18.00 mph')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Edit' })).toHaveCSS(
+    'background-color',
+    'rgb(255, 255, 255)',
+  )
+  await expect(page.getByRole('button', { name: 'Delete' })).toHaveCSS(
+    'background-color',
+    'rgb(255, 255, 255)',
+  )
 
   const showRouteCheckbox = page.getByLabel('Show route')
   await expect(showRouteCheckbox).toBeChecked()
