@@ -99,14 +99,31 @@ test('filters rides and presents a responsive route detail with control-free map
   await expect(page.getByRole('heading', { name: 'Morning Loop' })).toBeVisible()
   await expect(page.getByRole('application', { name: 'Map of Morning Loop' })).toBeVisible()
   await expect(page.getByText('18.00 mph')).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Edit' })).toHaveCSS(
+  const editButton = page.getByRole('button', { name: 'Edit' })
+  const deleteButton = page.getByRole('button', { name: 'Delete' })
+  await expect(editButton).toHaveCSS(
     'background-color',
     'rgb(255, 255, 255)',
   )
-  await expect(page.getByRole('button', { name: 'Delete' })).toHaveCSS(
+  await expect(deleteButton).toHaveCSS(
     'background-color',
     'rgb(255, 255, 255)',
   )
+  await editButton.hover()
+  await expect(editButton).toHaveCSS('background-color', 'rgb(31, 53, 35)')
+  await expect(editButton).toHaveCSS('color', 'rgb(255, 255, 255)')
+  await deleteButton.hover()
+  const errorBackground = await deleteButton.evaluate(() => {
+    const probe = document.createElement('span')
+    probe.style.backgroundColor = 'var(--color-error)'
+    document.body.append(probe)
+    const color = getComputedStyle(probe).backgroundColor
+    probe.remove()
+
+    return color
+  })
+  await expect(deleteButton).toHaveCSS('background-color', errorBackground)
+  await expect(deleteButton).toHaveCSS('color', 'rgb(255, 255, 255)')
 
   const showRouteCheckbox = page.getByLabel('Show route')
   await expect(showRouteCheckbox).toBeChecked()

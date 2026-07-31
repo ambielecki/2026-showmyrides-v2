@@ -75,8 +75,20 @@ onBeforeUnmount(() => window.clearTimeout(pollTimer))
           <p v-if="ride.description" class="mt-3 max-w-3xl whitespace-pre-line">{{ ride.description }}</p>
         </div>
         <div class="flex shrink-0 gap-3">
-          <button type="button" class="btn bg-white" @click="showEditDialog = true">Edit</button>
-          <button type="button" class="btn btn-error btn-outline bg-white" @click="showDeleteDialog = true">Delete</button>
+          <button
+            type="button"
+            class="btn bg-white hover:border-neutral hover:bg-neutral hover:text-white"
+            @click="showEditDialog = true"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-error btn-outline bg-white hover:border-error hover:bg-error hover:text-white"
+            @click="showDeleteDialog = true"
+          >
+            Delete
+          </button>
         </div>
       </div>
 
