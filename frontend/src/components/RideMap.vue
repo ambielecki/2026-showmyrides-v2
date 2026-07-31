@@ -207,7 +207,11 @@ onBeforeUnmount(() => {
         <input v-model.number="routeOpacity" type="range" min="0.1" max="1" step="0.1" class="range range-primary range-sm" />
       </label>
       <label class="flex items-center gap-4 font-semibold">
-        <input v-model="routeVisible" type="checkbox" class="checkbox checkbox-primary bg-white" />
+        <input
+          v-model="routeVisible"
+          type="checkbox"
+          class="checkbox bg-white checked:bg-primary checked:text-primary-content"
+        />
         Show route
       </label>
     </fieldset>
