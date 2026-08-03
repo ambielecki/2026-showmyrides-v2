@@ -71,6 +71,19 @@ proxy identifies the application, caches results for 24 hours, and enforces publ
 service rate limits. Manual coordinate entry remains available when search is
 unavailable.
 
+## Rides
+
+Authenticated users can upload Garmin FIT activities up to 50 MB from `/rides/add`, then
+browse, filter, edit, and delete their rides from `/rides`. Uploads are stored privately and
+processed after the HTTP response by the `rides:process-fit` Artisan command. The processor
+uses the installed `sportlog/fit` decoder, stores imperial metrics and GeoJSON routes, and
+retains failed rides with a user-safe error so they can still be managed.
+
+Ride details display a reusable Leaflet route map with color, opacity, visibility, fullscreen,
+and PNG export controls. Standard locations use OpenStreetMap; Watopia and Makuri Islands use
+the bundled Zwift image basemaps. Exported PNGs contain the current basemap, route styling, and
+attribution without interactive map controls.
+
 ## Verification
 
 Run backend commands in the deploy container:

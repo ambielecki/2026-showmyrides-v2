@@ -108,6 +108,13 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 
 - Laravel can be deployed using [Laravel Cloud](https://cloud.laravel.com/), which is the fastest way to deploy and scale production Laravel applications.
 
+=== tests rules ===
+
+# Test Enforcement
+
+- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
+- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
+
 === laravel/core rules ===
 
 # Do Things the Laravel Way
@@ -164,6 +171,8 @@ The application will use Laravel Fortify for basic authentication with Laravel S
 
 ## Guidelines
 - PHP functions should have return types and typed arguments
+- Prefer the documentation and source for installed packages under `vendor/` before searching the web. Use online sources
+only when the installed package does not answer the question.
 - Controllers should be thin and primarily handle getting data from the request and returning a response. Other logic should
 be extracted to a service.
 - Create request and response DTOs to make passing data between Controller and service layer explicit.

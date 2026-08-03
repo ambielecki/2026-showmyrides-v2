@@ -1,4 +1,9 @@
 {
   "extends": "../node_modules/@tsconfig/node24/tsconfig.json",
-  "include": ["./**/*"]
+  "include": ["./**/*"],
+  "compilerOptions": {
+    "lib": ["ES2024", "DOM", "DOM.Iterable"],
+    "types": ["node"],
+    "noEmit": true
+  }
 }

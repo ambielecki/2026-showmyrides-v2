@@ -39,4 +39,5 @@ RUN docker-php-ext-install \
     zip
 
 COPY ./ssh-keys /root/.ssh
+COPY ./uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 RUN chmod 600 /root/.ssh/id_rsa

@@ -97,4 +97,21 @@ describe('HttpService', () => {
     expect(request.method).toBe('PATCH')
     expect(request.credentials).toBe('include')
   })
+
+  it('sends FormData without overriding the browser multipart content type', async () => {
+    const fetchMock = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(null, { status: 204 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify({ data: {} }), { status: 201 }))
+    vi.stubGlobal('fetch', fetchMock)
+    const formData = new FormData()
+    formData.set('name', 'Uploaded ride')
+
+    await new HttpService('http://localhost:8080').post('/api/rides', formData)
+
+    const request = fetchMock.mock.calls[1]?.[1] as RequestInit
+    const headers = request.headers as Headers
+    expect(request.body).toBe(formData)
+    expect(headers.has('Content-Type')).toBe(false)
+  })
 })

@@ -48,6 +48,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the rides owned by the user.
+     */
+    public function rides(): HasMany
+    {
+        return $this->hasMany(Ride::class);
+    }
+
+    /**
      * Get the attributes that should be cast.
      *
      * @return array<string, string>

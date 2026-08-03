@@ -12,6 +12,9 @@ import ComingSoonView from '@/views/ComingSoonView.vue'
 import HomeView from '@/views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
 import LocationsView from '@/views/LocationsView.vue'
+import AddRideView from '@/views/AddRideView.vue'
+import RideView from '@/views/RideView.vue'
+import RidesView from '@/views/RidesView.vue'
 import NotificationTestView from '@/views/NotificationTestView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import SettingsView from '@/views/SettingsView.vue'
@@ -40,21 +43,13 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/rides',
     name: 'rides',
-    component: ComingSoonView,
-    props: {
-      title: 'Rides',
-      description: 'Your saved rides will be available in a future update.',
-    },
+    component: RidesView,
     meta: { requiresAuth: true, title: 'Rides' },
   },
   {
     path: '/rides/add',
     name: 'add-ride',
-    component: ComingSoonView,
-    props: {
-      title: 'Add Ride',
-      description: 'Ride uploads will be available in a future update.',
-    },
+    component: AddRideView,
     meta: { requiresAuth: true, title: 'Add Ride' },
   },
   {
@@ -66,6 +61,12 @@ const routes: RouteRecordRaw[] = [
       description: 'Ride map overlays will be available in a future update.',
     },
     meta: { requiresAuth: true, title: 'Ride Overlay' },
+  },
+  {
+    path: '/rides/:rideId',
+    name: 'ride-detail',
+    component: RideView,
+    meta: { requiresAuth: true, title: 'Ride Details' },
   },
   {
     path: '/settings',

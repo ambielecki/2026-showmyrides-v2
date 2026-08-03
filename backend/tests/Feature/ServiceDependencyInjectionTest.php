@@ -1,13 +1,21 @@
 <?php
 
+use App\Contracts\FitFileDecoderInterface;
 use App\Contracts\GeocodingServiceInterface;
 use App\Contracts\LocationServiceInterface;
+use App\Contracts\RideFitProcessingServiceInterface;
+use App\Contracts\RideProcessingLauncherInterface;
+use App\Contracts\RideServiceInterface;
 use App\Data\LocationData;
 use App\Data\LocationSearchResultData;
 use App\Models\Location;
 use App\Models\User;
+use App\Services\ArtisanRideProcessingLauncher;
 use App\Services\LocationService;
 use App\Services\NominatimService;
+use App\Services\RideFitProcessingService;
+use App\Services\RideService;
+use App\Services\SportlogFitFileDecoder;
 use Illuminate\Foundation\Testing\LazilyRefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Mockery\MockInterface;
@@ -18,7 +26,15 @@ test('service contracts resolve to their configured implementations', function (
     expect(app(LocationServiceInterface::class))
         ->toBeInstanceOf(LocationService::class)
         ->and(app(GeocodingServiceInterface::class))
-        ->toBeInstanceOf(NominatimService::class);
+        ->toBeInstanceOf(NominatimService::class)
+        ->and(app(FitFileDecoderInterface::class))
+        ->toBeInstanceOf(SportlogFitFileDecoder::class)
+        ->and(app(RideFitProcessingServiceInterface::class))
+        ->toBeInstanceOf(RideFitProcessingService::class)
+        ->and(app(RideProcessingLauncherInterface::class))
+        ->toBeInstanceOf(ArtisanRideProcessingLauncher::class)
+        ->and(app(RideServiceInterface::class))
+        ->toBeInstanceOf(RideService::class);
 });
 
 test('location controller uses the injected location service contract', function () {
